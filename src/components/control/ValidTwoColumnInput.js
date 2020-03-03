@@ -18,7 +18,7 @@ class ValidTwoColumnInput extends Component {
             externalCall: props.call,
             externalCallback: props.callback,
             value: '',
-            valid: true,
+            validated: true,
             disable: false
         }
         autoBind(this)
@@ -31,7 +31,7 @@ class ValidTwoColumnInput extends Component {
     validate(evt) {
         var new_value = this.state.value
         var new_valid = this.state.externalCallback(new_value)
-        this.setState({ valid: new_valid })
+        this.setState({ validated: new_valid })
         return { 'valid': new_valid, 'value': new_value }
     }
 
@@ -40,34 +40,21 @@ class ValidTwoColumnInput extends Component {
     }
     clear() {
         this.setState({
-            'value': '',
-            'valid': true,
-            'disable': false
+            value: '',
+            validated: true,
+            disable: false
         })
     }
 
-    render() {
-        const contentLabel = <Form.Label column sm="2">{ this.state.label }: </Form.Label>
-        const contentValid = <Col sm="10">
-                <InputGroup className="mb-1">
-                    <Form.Control type="input" onChange= { this.changeHandler } placeholder={ this.state.placeholder } value={ this.state.value } disabled={ this.state.disable } />
-                </InputGroup>
-            </Col>
-        const contentError = <Col sm="10">
-            <InputGroup className="mb-1">
-                <Form.Control type="input" onChange= { this.changeHandler } placeholder={ this.state.placeholder } value={ this.state.value } disabled={ this.state.disable } />
-                <InputGroup.Append>
-                <InputGroup.Text className="bg-danger text-white" ><FontAwesomeIcon icon={ faTimes } /></InputGroup.Text>
-                </InputGroup.Append>
-            </InputGroup>
-        </Col>
-
-        const contentForm = this.state.valid ? contentValid : contentError
-        
+    render() {        
         return(
             <Form.Group as={Row} controlId={ this.state.controlId }>
-                { contentLabel }
-                { contentForm }
+                <Form.Label column sm="2">{ this.state.label }: </Form.Label>
+                <Col sm="10">
+                    <InputGroup className="mb-2">
+                        <Form.Control isInvalid={ !this.state.validated } type="input" onChange= { this.changeHandler } placeholder={ this.state.placeholder } value={ this.state.value } disabled={ this.state.disable } />
+                    </InputGroup>
+                </Col>
             </Form.Group>
         )
     }

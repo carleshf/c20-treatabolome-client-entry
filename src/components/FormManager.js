@@ -10,7 +10,7 @@ import VariantInput from './forms/VariantInputForm'
 class FormManager extends Component {
     constructor(props) {
         super(props)
-        this.state = { current_step: 2 }
+        this.state = { current_step: 3 }
         this.child_guider = React.createRef();
     }
 

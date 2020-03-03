@@ -26,18 +26,18 @@ class DiseaseInput extends Component {
 		if( typeof props.disease === 'undefined' ) {
             this.state = {
                 ordo: '',                       omim: '',
-                hpo: [],                        validated: 'no',
+                hpo: [],                        validated: false,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         } else {
             this.state = {
                 ordo: props.ordo,               omim: props.omim,
-                hpo: props.hpo,                 validated: 'yes',
+                hpo: props.hpo,                 validated: true,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         }
-        /*this.child_ordo = React.createRef();
-        this.child_omim = React.createRef();
+        this.child_ordo = React.createRef();
+        /*this.child_omim = React.createRef();
         this.child_hpo = React.createRef();*/
         autoBind(this)
     }
@@ -55,8 +55,12 @@ class DiseaseInput extends Component {
     }
 
     triggerValidation = () => {
-        if( this.state.ordo.length !== 1 ) {
-            this.setState({ validated: 'yes' })
+        if( this.state.ordo.length >= 1 ) {
+            this.setState({ validated: true })
+            this.child_ordo.current.setValid(true)
+        } else {
+            this.setState({ validated: false })
+            this.child_ordo.current.setValid(false)
         }
     }
 
@@ -78,10 +82,10 @@ class DiseaseInput extends Component {
     render = () => {
         var check = ''
         var next = ''
-        if( this.state.validated === 'no' ) {
+        if( !this.state.validated ) {
             check = <Button onClick={ this.triggerValidation } >Check <FontAwesomeIcon icon={faSearch} /></Button>
         }
-        if( this.state.validated === 'yes' ) {
+        if( this.state.validated ) {
             next = <Button onClick={ this.triggerNext }>Next <FontAwesomeIcon icon={faChevronRight} /></Button>
         }
         return(
@@ -99,7 +103,7 @@ class DiseaseInput extends Component {
                 <Form.Group as={Row} controlId="ordo">
                     <Form.Label column sm="2">ORDO: </Form.Label>
                     <Col sm="10">
-                        <ORDOFetcher fetcher={ this.ordoFetcher } />
+                        <ORDOFetcher ref={ this.child_ordo } fetcher={ this.ordoFetcher } />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="OMIM">

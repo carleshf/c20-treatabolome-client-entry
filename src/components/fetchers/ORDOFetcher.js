@@ -10,14 +10,20 @@ class ORDOFetcher extends Component {
             isLoading: false,
             multiple: false,
             options: [],
-            callbackChange: props.fetcher
+            callbackChange: props.fetcher,
+            validated: true
         }
+    }
+
+    setValid = (status) => {
+        this.setState({ validated: status })
     }
   
     render() {
         return (
             <Fragment>
                 <AsyncTypeahead
+                    isInvalid={ !this.state.validated }
                     onChange={ (sel) => { this.state.callbackChange(sel) } }
                     isLoading={ this.state.isLoading }
                     onSearch={ (query) => {
