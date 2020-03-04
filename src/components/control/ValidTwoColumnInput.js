@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-
-import {
-    Form, Row, Col, InputGroup
-} from 'react-bootstrap';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
 

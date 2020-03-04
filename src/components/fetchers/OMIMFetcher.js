@@ -9,7 +9,7 @@ class OMIMFetcher extends React.Component {
             allowNew: false,
             isLoading: false,
             multiple: false,
-            options: [],
+            options: props.options,
             callbackChange: props.fetcher
         }
     }
@@ -18,6 +18,7 @@ class OMIMFetcher extends React.Component {
         return (
             <Fragment>
                 <AsyncTypeahead
+                    id="omim_fetcher"
                     onChange={ (sel) => { this.state.callbackChange(sel) } }
                     isLoading={this.state.isLoading}
                     onSearch={(query) => {
@@ -31,6 +32,7 @@ class OMIMFetcher extends React.Component {
                                 })
                             }));
                     }}
+                    defaultSelected={this.state.options}
                     options={this.state.options}
                     labelKey="term"
                     placeholder="Search for an OMIM term"

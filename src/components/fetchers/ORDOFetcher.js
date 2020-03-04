@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import React, { Component, Fragment } from 'react'
+import { AsyncTypeahead } from 'react-bootstrap-typeahead'
 
 
 class ORDOFetcher extends Component {
@@ -9,7 +9,7 @@ class ORDOFetcher extends Component {
             allowNew: false,
             isLoading: false,
             multiple: false,
-            options: [],
+            options: props.options,
             callbackChange: props.fetcher,
             validated: true
         }
@@ -23,6 +23,7 @@ class ORDOFetcher extends Component {
         return (
             <Fragment>
                 <AsyncTypeahead
+                    id="ordo_fetcher"
                     isInvalid={ !this.state.validated }
                     onChange={ (sel) => { this.state.callbackChange(sel) } }
                     isLoading={ this.state.isLoading }
@@ -37,6 +38,7 @@ class ORDOFetcher extends Component {
                                 })
                             }));
                     } }
+                    defaultSelected={this.state.options}
                     options={this.state.options}
                     labelKey="term"
                     placeholder="Search for an ORDO term"

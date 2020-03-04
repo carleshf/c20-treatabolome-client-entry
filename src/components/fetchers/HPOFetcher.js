@@ -8,7 +8,7 @@ class HPOFetcher extends React.Component {
         this.state = {
             allowNew: false,
             isLoading: false,
-            options: [],
+            options: props.options,
             callbackChange: props.fetcher
         }
     }
@@ -17,6 +17,7 @@ class HPOFetcher extends React.Component {
         return (
             <Fragment>
                 <AsyncTypeahead
+                    id="hpo_fetcher"
                     onChange={ (sel) => { this.state.callbackChange(sel) } }
                     clearButton
                     multiple={true}
@@ -32,6 +33,7 @@ class HPOFetcher extends React.Component {
                                 })
                             }));
                     }}
+                    defaultSelected={this.state.options}
                     options={this.state.options}
                     labelKey="term"
                     placeholder="Search for HPO terms..."

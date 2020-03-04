@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import React, { Fragment } from 'react'
+import { AsyncTypeahead } from 'react-bootstrap-typeahead'
 
 
 class GeneFetcher extends React.Component {
@@ -8,7 +8,7 @@ class GeneFetcher extends React.Component {
         this.state = {
             allowNew: false,
             isLoading: false,
-            options: [],
+            options: props.options,
             callbackChange: props.fetcher,
             validated: true
         }
@@ -22,6 +22,7 @@ class GeneFetcher extends React.Component {
         return (
             <Fragment>
                 <AsyncTypeahead
+                    id="gene_fetcher"
                     onChange={ (sel) => { this.state.callbackChange(sel) } }
                     clearButton
                     isInvalid={ !this.state.validated }
@@ -38,6 +39,7 @@ class GeneFetcher extends React.Component {
                                 })
                             }));
                     }}
+                    defaultSelected={this.state.options}
                     options={this.state.options}
                     labelKey="name"
                     placeholder="Search for genes..."

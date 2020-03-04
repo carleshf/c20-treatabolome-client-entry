@@ -31,13 +31,13 @@ class Guider extends Component {
     }
 
     render = () => {
-        const body = this.state.steps.map((step) => {
+        const body = this.state.steps.map((step, idx) => {
             if( this.state.current_step === step.n ) {
-                return <div><FontAwesomeIcon icon={faArrowAltCircleRight} /><span> <strong>{ step.text }</strong></span><br /></div>
+                return <div key={ idx }><FontAwesomeIcon icon={faArrowAltCircleRight} /><span> <strong>{ step.text }</strong></span><br /></div>
             } else if( this.state.current_step > step.n ) {
-                return <div><FontAwesomeIcon icon={faCircle} /><span> { step.text }</span><br /></div>
+                return <div key={ idx }><FontAwesomeIcon icon={faCircle} /><span> { step.text }</span><br /></div>
             } else {
-                return <div><FontAwesomeIcon icon={faDotCircle} /><span> { step.text }</span><br /></div>
+                return <div key={ idx }><FontAwesomeIcon icon={faDotCircle} /><span> { step.text }</span><br /></div>
             }
         })
         return(

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBroom, faSearch, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import ValidTwoColumnInput from "../control/ValidTwoColumnInput"
@@ -73,7 +73,7 @@ class PublicationInfo extends Component {
     The component has a child, PublicationInfo, used to
     display gathered infomration.
 */
-class PublicationIntput extends Component {
+class PublicationInput extends Component {
 	constructor( props ) {
         super(props)
         if( typeof props.publication === 'undefined' ) {
@@ -192,4 +192,4 @@ class PublicationIntput extends Component {
 		)
 	}
 }
-export default PublicationIntput
+export default PublicationInput

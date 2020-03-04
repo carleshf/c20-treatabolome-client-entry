@@ -21,18 +21,18 @@ const autoBind = require('auto-bind');
          ordo, omim, hpo
 */
 class DiseaseInput extends Component {
-    constructor(props) {
-		super(props)
+    constructor( props ) {
+		super( props )
 		if( typeof props.disease === 'undefined' ) {
             this.state = {
-                ordo: '',                       omim: '',
+                ordo: [],                       omim: [],
                 hpo: [],                        validated: false,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         } else {
             this.state = {
-                ordo: props.ordo,               omim: props.omim,
-                hpo: props.hpo,                 validated: true,
+                ordo: props.disease.ordo,               omim: props.disease.omim,
+                hpo: props.disease.hpo,                 validated: true,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         }
@@ -42,30 +42,30 @@ class DiseaseInput extends Component {
         autoBind(this)
     }
 
-    ordoFetcher = (value) => {
+    ordoFetcher = ( value ) => {
         this.setState({ ordo: value })
     }
 
-    omimFetcher = (value) => {
+    omimFetcher = ( value ) => {
         this.setState({ omim: value })
     }
 
-    hpoFetcher = (value) => {
+    hpoFetcher = ( value ) => {
         this.setState({ hpo: value })
     }
 
     triggerValidation = () => {
         if( this.state.ordo.length >= 1 ) {
             this.setState({ validated: true })
-            this.child_ordo.current.setValid(true)
+            this.child_ordo.current.setValid( true )
         } else {
             this.setState({ validated: false })
-            this.child_ordo.current.setValid(false)
+            this.child_ordo.current.setValid( false )
         }
     }
 
     triggerPrev = () => {
-        this.state.callbackNext({
+        this.state.callbackPrev({
             formName: 'disease',   step: 1
         })
     }
@@ -103,23 +103,23 @@ class DiseaseInput extends Component {
                 <Form.Group as={Row} controlId="ordo">
                     <Form.Label column sm="2">ORDO: </Form.Label>
                     <Col sm="10">
-                        <ORDOFetcher ref={ this.child_ordo } fetcher={ this.ordoFetcher } />
+                        <ORDOFetcher ref={ this.child_ordo } fetcher={ this.ordoFetcher } options={ this.state.ordo } />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="OMIM">
                     <Form.Label column sm="2">OMIM: </Form.Label>
                     <Col sm="10">
-                        <OMIMetcher fetcher={ this.omimFetcher } />
+                        <OMIMetcher fetcher={ this.omimFetcher } options={ this.state.omim } />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="HPO">
                     <Form.Label column sm="2">HPO(s): </Form.Label>
                     <Col sm="10">
-                        <HPOFetcher fetcher={ this.hpoFetcher } />
+                        <HPOFetcher fetcher={ this.hpoFetcher } options={ this.state.hpo } />
                     </Col>
                 </Form.Group>
                 <div className="float-sm-right">
-                    <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={faChevronLeft} /> Previous</Button>{' '}
+                    <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={ faChevronLeft } /> Previous</Button>{' '}
                     { check }
                     { next }
                 </div>
