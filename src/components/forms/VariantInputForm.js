@@ -53,7 +53,7 @@ class VariantInput extends Component {
         this.setState({ variant: value.target.value.trim() })
     }
 
-    fetchInheritance = (value) => {
+    fetchZygosity = (value) => {
         this.setState({ inheritance: value.target.value.trim() })
     }
 
@@ -82,14 +82,14 @@ class VariantInput extends Component {
                 })
                 .then((data) => {
                     var input = this.state.tarnscript + ':' + this.state.variant
-                    this.child_coll.current.addVariant(data, input, this.state.build, this.state.gene, this.state.inheritance)
+                    this.child_coll.current.addVariant(data, input, this.state.build, this.state.gene, this.state.zygosity)
 
                     var vars = this.state.variants
                     vars = vars.concat({
                         idx: vars.length + 1,
                         gene: data.content.gene,
                         build: this.state.build,                protein: data.content.protein.tlr,
-                        transcript: data.content.transcript,    inheritance: this.state.inheritance,
+                        transcript: data.content.transcript,    inheritance: this.state.zygosity,
                         input: input,
                         input_gene: this.state.gene
                     })
@@ -142,7 +142,7 @@ class VariantInput extends Component {
                     <li>A genomic build (<strong>mandatory</strong>)</li>
                     <li>A transcript where the variant lies (<strong>mandatory</strong>)</li>
                     <li>A variant as defined genomic by Sequence Variant Nomenclature as reference sequence (starting by g. - <strong>mandatory</strong>)</li>
-                    <li>The variant inheritance and zygosity (optional)</li>
+                    <li>The variant zygosity (optional)</li>
                 </ol>
             </Jumbotron>
         }
@@ -182,9 +182,9 @@ class VariantInput extends Component {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="inh_zyg">
-                        <Form.Label column sm="2">Inheritance and zygosity: </Form.Label>
+                        <Form.Label column sm="2">Zygosity: </Form.Label>
                         <Col sm="10">
-                            <Form.Control onChange={ this.fetchInheritance } value={ this.state.inheritance } type="input" placeholder="Inheritance and zygosity" />
+                            <Form.Control onChange={ this.fetchZygosity } value={ this.state.zygosity } type="input" placeholder="Zygosity" />
                         </Col>
                     </Form.Group>
                     <div className="text-right">

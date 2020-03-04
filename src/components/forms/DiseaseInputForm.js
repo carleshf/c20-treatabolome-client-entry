@@ -118,6 +118,12 @@ class DiseaseInput extends Component {
                         <HPOFetcher fetcher={ this.hpoFetcher } options={ this.state.hpo } />
                     </Col>
                 </Form.Group>
+                <Form.Group as={Row} controlId="Inheritance">
+                    <Form.Label column sm="2">Inheritance: </Form.Label>
+                    <Col sm="10">
+                        <HPOFetcher fetcher={ this.hpoFetcher } options={ this.state.hpo } />
+                    </Col>
+                </Form.Group>
                 <div className="float-sm-right">
                     <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={ faChevronLeft } /> Previous</Button>{' '}
                     { check }

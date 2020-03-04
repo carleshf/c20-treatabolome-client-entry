@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import GenotypeCompositor from '../control/GenotypeCompositor'
 
-import { Card, Jumbotron, Form, Col, Row, Button  } from 'react-bootstrap';
+import { Card, Jumbotron, Container, Form, Col, Row, Button  } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
 
@@ -13,15 +13,16 @@ class GenotypeInput extends Component {
         if( typeof props.genotypes === 'undefined' ) {
             this.state = {
                 genotypes: [],
+                variants: props.variants.variants,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         } else {
             this.state = {
                 genotypes: props.genotypes.genotypes,
+                variants: props.variants.variants,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         }
-        this.setState({ variants: props.variants.variants })
         this.child_gene = React.createRef();
         this.child_coll = React.createRef();
         autoBind(this)

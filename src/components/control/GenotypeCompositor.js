@@ -13,30 +13,35 @@ class GenotypeCompositor extends Component {
             variants: props.variants
         }
         autoBind(this)
+        console.log("end constructor")
     }
 
     render = () => {
-        var star_var = []
-        /*this.state.variants.map( (vari) => {
-            return <option>vari.transcript</option>
-        })*/
-        var cons_var = []
+        var vars = this.state.variants.map( (vari, idx) => {
+            return <option key={ idx }>{ vari.input }</option>
+        })
         return(
             <Form.Group as={Row} controlId={ this.state.controlId }>
-                <Form.Label column sm="2">Starting: </Form.Label>
-                <Col sm="3">
-                    <Form.Control onChange={ this.fetchBuild } as="select">
-                        { star_var }
-                    </Form.Control>
+                <Col sm="10">
+                    <Row>
+                        <Form.Label column sm="2">Allele 1: </Form.Label>
+                        <Col sm="10">
+                            <Form.Control onChange={ this.fetchBuild } as="select">
+                                { vars }
+                            </Form.Control>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Form.Label column sm="2">Allele 2: </Form.Label>
+                        <Col sm="10">
+                            <Form.Control onChange={ this.fetchBuild } as="select">
+                                { vars }
+                            </Form.Control>
+                        </Col>
+                    </Row>
                 </Col>
-                <Form.Label column sm="2">Consecutive: </Form.Label>
-                <Col sm="3">
-                    <Form.Control onChange={ this.fetchBuild } as="select">
-                        { cons_var }
-                    </Form.Control>
-                </Col>
-                <Col sm="2">
-                    <Button>Add <FontAwesomeIcon icon={ faPlus } /></Button>
+                <Col sm="1">
+                    <Button><FontAwesomeIcon icon={ faPlus } /> Add</Button>
                 </Col>
             </Form.Group>
         )
