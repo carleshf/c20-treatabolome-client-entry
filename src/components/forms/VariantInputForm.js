@@ -81,15 +81,17 @@ class VariantInput extends Component {
                     }
                 })
                 .then((data) => {
-                    this.child_coll.current.addVariant(data, this.state.build, this.state.gene, this.state.inheritance)
+                    var input = this.state.tarnscript + ':' + this.state.variant
+                    this.child_coll.current.addVariant(data, input, this.state.build, this.state.gene, this.state.inheritance)
 
                     var vars = this.state.variants
                     vars = vars.concat({
                         idx: vars.length + 1,
-                        gene: data.content.gene === this.state.gene ? this.state.gene : data.content.gene + ' / <' + this.state.gene + '>',
+                        gene: data.content.gene,
                         build: this.state.build,                protein: data.content.protein.tlr,
                         transcript: data.content.transcript,    inheritance: this.state.inheritance,
-                        input: this.state.tarnscript + ':' + this.state.variant
+                        input: input,
+                        input_gene: this.state.gene
                     })
                     this.setState({ variants: vars })
 
@@ -107,6 +109,10 @@ class VariantInput extends Component {
                     this.setState({ validVariant: false })
                 })
         }
+    }
+
+    dropVariant = (idx) => {
+        this.setState({ variants: this.state.variants.filter( (vari) => vari.idx !== idx ) })
     }
 
     triggerPrev = () => {
@@ -185,7 +191,7 @@ class VariantInput extends Component {
                         <Button onClick={ this.validateVariant }>Validate and add to the collection <FontAwesomeIcon icon={faSearch} /></Button>
                     </div>
                     <h4>Collection</h4>
-                    <VariantCollection ref={ this.child_coll } variants={ this.state.variants } />
+                    <VariantCollection ref={ this.child_coll } variants={ this.state.variants } callbackDropVariant={ this.dropVariant } />
                     <div className="float-sm-right">
                         <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={faChevronLeft} /> Previous</Button>{' '}
                         { next }

@@ -29,8 +29,8 @@ class FormManager extends Component {
                             ordo: [ { id: "Orphanet:370943", name: "Autism spectrum disorder-epilepsy-arthrogryposis syndrome", term: "Orphanet:370943 > Autism spectrum disorder-epilepsy-arthrogryposis syndrome" }   ]
             },
             variants: {     variants: [
-                {   build: "GRCh37", gene: "COL1A1 / <APP>", idx: 1, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
-                {   build: "GRCh37", gene: "COL1A1 / <XACT>", idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"   }
+                {   build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 1, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
+                {   build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"   }
             ]}
         }
 
@@ -60,7 +60,7 @@ class FormManager extends Component {
             case 3:
                 return <VariantInput variants={ this.state.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 4:
-                return <GenotypeInput genotypes={ this.state.genotypes } moveNext={ this.moveNext } movePrev={ this.movePrev } />
+                return <GenotypeInput genotypes={ this.state.genotypes } variants={ this.state.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             default:
                 return <div></div>
         }
