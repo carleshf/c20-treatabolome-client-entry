@@ -14,7 +14,7 @@ class FormManager extends Component {
         super(props)
         //this.state = { current_step: 1 }
         this.state = {
-            current_step: 5,
+            current_step: 2,
             publication: {  authors: "Gutiérrez-Sacristán, A; Hernández-Ferrer, C; González, JR; Furlong, LI",
                             database: "PubMed",
                             journal: "Bioinformatics",
@@ -28,7 +28,8 @@ class FormManager extends Component {
                                     { id: "HP:0000924", name: "Abnormality of the skeletal system", term: "HP:0000924 > Abnormality of the skeletal system" }   ],
                             omim: [],
                             ordo: [ { id: "Orphanet:370943", name: "Autism spectrum disorder-epilepsy-arthrogryposis syndrome", term: "Orphanet:370943 > Autism spectrum disorder-epilepsy-arthrogryposis syndrome" } ],
-                            description: "This is the descriptions"
+                            description: "This is the descriptions",
+                            inheritance: [ "unknown" ]
             },
             variants: {     variants: [
                 {   build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },

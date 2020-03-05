@@ -29,20 +29,22 @@ class DiseaseInput extends Component {
                 ordo: [],                       omim: [],
                 hpo: [],                        description: '',
                 chars: 200,                     validated: false,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
+                inheritance: ['unknown']
             }
         } else {
             this.state = {
                 ordo: props.disease.ordo,                       omim: props.disease.omim,
                 hpo: props.disease.hpo,                         description: props.disease.description,
                 chars: 200 - props.disease.description.length,  validated: true,
-                callbackNext: props.moveNext,                   callbackPrev: props.movePrev
+                callbackNext: props.moveNext,                   callbackPrev: props.movePrev,
+                inheritance: props.disease.inheritance
             }
         }
         this.child_ordo = React.createRef();
         /*this.child_omim = React.createRef();
         this.child_hpo = React.createRef();*/
-        autoBind(this)
+        autoBind( this )
     }
 
     ordoFetcher = ( value ) => {
@@ -57,9 +59,13 @@ class DiseaseInput extends Component {
         this.setState({ hpo: value })
     }
 
-    descFetcher = ( event ) => {
-        this.setState({ description: event.target.value })
-        this.setState({ chars: 200 - event.target.value.length })
+    inheritanceFetcher = ( value ) => {
+        this.setState({ inheritance: value })
+    }
+
+    descFetcher = ( evt ) => {
+        this.setState({ description: evt.target.value })
+        this.setState({ chars: 200 - evt.target.value.length })
     }
 
     triggerValidation = () => {
@@ -135,7 +141,9 @@ class DiseaseInput extends Component {
                         id="diseaseInheritance"
                         clearButton
                         multiple={true}
-                        options={['autosomal dominant', 'autosomal recessive', 'X-linked', 'X-linked dominant', 'X-linked recessive', 'Y-linked inheritance', 'digenic inheritance', 'mitochondrial inheritance', 'oligogenic inheritance', 'autosomal dominant with paternal imprinting', 'autosomal dominant with maternal imprinting', 'unknown']}
+                        onChange={ this.inheritanceFetcher }
+                        defaultSelected={ this.state.inheritance }
+                        options={[ 'autosomal dominant', 'autosomal recessive', 'X-linked', 'X-linked dominant', 'X-linked recessive', 'Y-linked inheritance', 'digenic inheritance', 'mitochondrial inheritance', 'oligogenic inheritance', 'autosomal dominant with paternal imprinting', 'autosomal dominant with maternal imprinting', 'unknown' ]}
                     />
                     </Col>
                 </Form.Group>
