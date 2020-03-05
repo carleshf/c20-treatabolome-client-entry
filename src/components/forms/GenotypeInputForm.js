@@ -4,7 +4,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import GenotypeCompositor from '../control/GenotypeCompositor'
 import GenotypeCollection from '../control/GenotypeCollection'
 
-import { Card, Jumbotron, Alert, checkbox, Button, Form  } from 'react-bootstrap';
+import { Card, Jumbotron, Alert, Button, Form  } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
 
@@ -13,19 +13,23 @@ class GenotypeInput extends Component {
         super(props)
         if( typeof props.genotypes === 'undefined' ) {
             this.state = {
-                genotypes: [],
-                variants: props.variants.variants,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                genotypes: [],                  variants: props.variants.variants,
+                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
+                no_geno: false
             }
         } else {
             this.state = {
-                genotypes: props.genotypes.genotypes,
-                variants: props.variants.variants,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                genotypes: props.genotypes.genotypes,   variants: props.variants.variants,
+                callbackNext: props.moveNext,           callbackPrev: props.movePrev,
+                no_geno: props.no_geno
             }
         }
         this.child_coll = React.createRef();
         autoBind(this)
+    }
+
+    toggleGenotype = () => {
+        this.setState({ no_geno: !this.state.no_geno })
     }
 
     triggerPrev = () => {
@@ -37,7 +41,7 @@ class GenotypeInput extends Component {
     triggerNext = () => {
         this.state.callbackNext({
             formName: 'genotypes',   step: 5,
-            data: { variants: this.state.variants }
+            data: { genotypes: this.state.genotypes, no_geno: this.state.no_geno }
         })
     }
 
@@ -66,7 +70,7 @@ class GenotypeInput extends Component {
                 <Card.Body>
                     { info }
                     <Alert variant={ no_geno }>
-                        <Form.Check  custom type="checkbox" id="no_geno" label="The reviewed scientific article does not report information on genotypes." />
+                        <Form.Check  custom type="checkbox" id="no_geno" checked={ this.state.no_geno } onChange={ this.toggleGenotype } label="The reviewed scientific article does not report information on genotypes." />
                     </Alert>
                     <h4>Fetcher</h4>
                     <GenotypeCompositor variants={ this.state.variants } />
