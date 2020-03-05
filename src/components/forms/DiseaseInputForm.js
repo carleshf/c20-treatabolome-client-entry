@@ -26,14 +26,16 @@ class DiseaseInput extends Component {
 		if( typeof props.disease === 'undefined' ) {
             this.state = {
                 ordo: [],                       omim: [],
-                hpo: [],                        validated: false,
+                hpo: [],                        description: '',
+                chars: 200,                     validated: false,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         } else {
             this.state = {
-                ordo: props.disease.ordo,               omim: props.disease.omim,
-                hpo: props.disease.hpo,                 validated: true,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                ordo: props.disease.ordo,                       omim: props.disease.omim,
+                hpo: props.disease.hpo,                         description: props.disease.description,
+                chars: 200 - props.disease.description.length,  validated: true,
+                callbackNext: props.moveNext,                   callbackPrev: props.movePrev
             }
         }
         this.child_ordo = React.createRef();
@@ -52,6 +54,11 @@ class DiseaseInput extends Component {
 
     hpoFetcher = ( value ) => {
         this.setState({ hpo: value })
+    }
+
+    descFetcher = ( event ) => {
+        this.setState({ description: event.target.value })
+        this.setState({ chars: 200 - event.target.value.length })
     }
 
     triggerValidation = () => {
@@ -98,7 +105,9 @@ class DiseaseInput extends Component {
                         <li>A disorder term from Orphanet Rare Disease Ontology (ORDO - <strong>mandatory</strong>)</li>
                         <li>A clinical feature from Online Mendelian Inheritance in Man (OMIM - optional)</li>
                         <li>One or muliple terms from the Human Phenotype Ontology (HPO - optional)</li>
+                        <li>The disease inheritance (optional)</li>
                     </ol>
+                    <p>An optional free text area is available to provide extra information when the combination of ORDO/OMIM/HPO terms is not enough to detail the disease of interest of the scientific article.</p>
                 </Jumbotron>
                 <Form.Group as={Row} controlId="ordo">
                     <Form.Label column sm="2">ORDO: </Form.Label>
@@ -123,6 +132,17 @@ class DiseaseInput extends Component {
                     <Col sm="10">
                         <HPOFetcher fetcher={ this.hpoFetcher } options={ this.state.hpo } />
                     </Col>
+                </Form.Group>
+                <Form.Group as={Row} controlId="Description">
+                    <Form.Label column sm="2">Description:</Form.Label>
+                    <Col sm="10">
+                        <Form.Control as="textarea" rows="3" onChange={ this.descFetcher } value={ this.state.description } />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} controlId="Decription2">
+                    <Col sm="11">
+                    </Col>
+                    <Form.Label column sm="1" className="input-small">{ this.state.chars }</Form.Label>
                 </Form.Group>
                 <div className="float-sm-right">
                     <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={ faChevronLeft } /> Previous</Button>{' '}

@@ -18,7 +18,7 @@ class GenotypeCompositor extends Component {
 
     render = () => {
         var vars = this.state.variants.map( (vari, idx) => {
-            return <option key={ idx }>{ vari.input }</option>
+            return <option key={ idx }>({ vari.gene }) { vari.input }</option>
         })
         return(
             <Form.Group as={Row} controlId={ this.state.controlId }>
