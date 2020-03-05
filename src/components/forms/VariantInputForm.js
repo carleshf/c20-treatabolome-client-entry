@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import GeneFetcher from '../fetchers/GeneFetcher'
 import VariantCollection from '../control/VariantCollection'
+import { Typeahead } from 'react-bootstrap-typeahead'
 
 import { Card, Jumbotron, Form, Col, Row, Button  } from 'react-bootstrap';
 
@@ -184,14 +185,13 @@ class VariantInput extends Component {
                     </Form.Group>
                     <Form.Group as={Row} controlId="inh_zyg"> 
                         <Form.Label column sm="2">Zygosity: </Form.Label>
-                            <Col sm="10">
-                                <Typeahead
-                                    id="variantZygosity"
-                                    clearButton
-                                    multiple={true}
-                                    options={['heterozygous', 'homozygous', 'hemizygous', 'mosaic', 'unknown']}
-                                />
-                            </Col>
+                        <Col sm="10">
+                            <Typeahead
+                                id="variantZygosity"
+                                clearButton
+                                multiple={true}
+                                options={['heterozygous', 'homozygous', 'hemizygous', 'mosaic', 'unknown']}
+                            />
                         </Col>
                     </Form.Group>
                     <div className="text-right">
