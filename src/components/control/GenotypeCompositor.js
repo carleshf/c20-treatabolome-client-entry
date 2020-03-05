@@ -10,10 +10,22 @@ class GenotypeCompositor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            variants: props.variants
+            variants: props.variants,
+            no_geno: props.no_geno,
+            alelle1:[],
+            allele2:[], 
+            callbackAddGenotype: props.callbackAddGenotype
         }
         autoBind(this)
         console.log("end constructor")
+    }
+
+    toggleGenotype = ( value ) => {
+        this.setState({ no_geno: value })
+    }
+
+    addGenotype = () => {
+
     }
 
     render = () => {
@@ -41,7 +53,7 @@ class GenotypeCompositor extends Component {
                     </Row>
                 </Col>
                 <Col sm="1">
-                    <Button><FontAwesomeIcon icon={ faPlus } /> Add</Button>
+                    <Button disabled={ this.state.no_geno }><FontAwesomeIcon icon={ faPlus } /> Add</Button>
                 </Col>
             </Form.Group>
         )

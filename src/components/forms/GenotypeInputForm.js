@@ -24,12 +24,18 @@ class GenotypeInput extends Component {
                 no_geno: props.no_geno
             }
         }
+        this.child_cons = React.createRef();
         this.child_coll = React.createRef();
         autoBind(this)
     }
 
     toggleGenotype = () => {
+        this.child_cons.current.toggleGenotype( !this.state.no_geno )
         this.setState({ no_geno: !this.state.no_geno })
+    }
+
+    addGenotype = ( value ) => {
+
     }
 
     triggerPrev = () => {
@@ -41,7 +47,8 @@ class GenotypeInput extends Component {
     triggerNext = () => {
         this.state.callbackNext({
             formName: 'genotypes',   step: 5,
-            data: { genotypes: this.state.genotypes, no_geno: this.state.no_geno }
+            data: { genotypes: this.state.no_geno ? [] : this.state.genotypes, 
+                no_geno: this.state.no_geno }
         })
     }
 
@@ -49,7 +56,7 @@ class GenotypeInput extends Component {
         var next = ''
         var info = ''
         var no_geno = 'warning'
-        if( this.state.genotypes.length === 0 ) {
+        if( this.state.genotypes.length === 0 && !this.state.no_geno ) {
             info = <Jumbotron>
                 <p>Some scientific articles do report more than just observed variants but also observed genotypes.</p>
                 <p>If a scientific article does not report information on genotypes, please, select the checkbox under this information tip.</p>
@@ -73,7 +80,7 @@ class GenotypeInput extends Component {
                         <Form.Check  custom type="checkbox" id="no_geno" checked={ this.state.no_geno } onChange={ this.toggleGenotype } label="The reviewed scientific article does not report information on genotypes." />
                     </Alert>
                     <h4>Fetcher</h4>
-                    <GenotypeCompositor variants={ this.state.variants } />
+                    <GenotypeCompositor ref={ this.child_cons } variants={ this.state.variants } no_geno={ this.state.no_geno } callbackAddGenotype={ this.addGenotype } />
                     <h4>Collection</h4>
                     <GenotypeCollection red={ this.child_coll } genotypes={ this.state.genotypes } />
                     <div className="float-sm-right">
