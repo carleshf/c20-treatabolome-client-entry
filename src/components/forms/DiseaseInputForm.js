@@ -4,6 +4,7 @@ import { faChevronLeft, faSearch, faChevronRight } from '@fortawesome/free-solid
 import ORDOFetcher from '../fetchers/ORDOFetcher';
 import OMIMetcher from '../fetchers/OMIMFetcher';
 import HPOFetcher from '../fetchers/HPOFetcher';
+import { Typeahead } from 'react-bootstrap-typeahead'
 
 import {
     Card, Form, Button, Col, Row, Jumbotron
@@ -81,7 +82,7 @@ class DiseaseInput extends Component {
         this.state.callbackNext({
             formName: 'disease',   step: 3,
             data: { ordo: this.state.ordo,  omim: this.state.omim,
-                hpo: this.state.hpo
+                hpo: this.state.hpo,        description: this.state.description
             }
         })
     }
@@ -130,7 +131,11 @@ class DiseaseInput extends Component {
                 <Form.Group as={Row} controlId="Inheritance">
                     <Form.Label column sm="2">Inheritance: </Form.Label>
                     <Col sm="10">
-                        <HPOFetcher fetcher={ this.hpoFetcher } options={ this.state.hpo } />
+                    <Typeahead
+                        clearButton
+                        multiple={true}
+                        options={['John', 'Paul', 'George', 'Ringo']}
+                    />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="Description">
