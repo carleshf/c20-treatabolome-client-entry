@@ -132,6 +132,7 @@ class DiseaseInput extends Component {
                     <Form.Label column sm="2">Inheritance: </Form.Label>
                     <Col sm="10">
                     <Typeahead
+                        id="diseaseInheritance"
                         clearButton
                         multiple={true}
                         options={['John', 'Paul', 'George', 'Ringo']}

@@ -7,14 +7,13 @@ import { Table, Button, Badge } from 'react-bootstrap';
 const autoBind = require('auto-bind');
 
 class VariantCollection extends Component {
-	constructor(props) {
-		super(props)
+	constructor( props ) {
+		super( props )
 		this.state = {
             variants: props.variants,
             callbackDropVariant: props.callbackDropVariant
         }
-        console.log(this.state)
-        autoBind(this)
+        autoBind( this )
     }
 
     addVariant = (data, input, build, gene, inheritance) => {
@@ -32,8 +31,8 @@ class VariantCollection extends Component {
         this.setState({ variants: vars })
     }
 
-    dropVariant = (idx) => {
-        this.state.callbackDropVariant(idx)
+    dropVariant = ( idx ) => {
+        this.state.callbackDropVariant( idx )
         this.setState({ variants: this.state.variants.filter( (vari) => vari.idx !== idx ) })
     }
 
@@ -51,12 +50,12 @@ class VariantCollection extends Component {
                 <td>{ vari.idx }</td>
                 <td>{ vari.input }</td>
                 <td>{ vari.build }</td>
-                <td><Badge variant="success">{ vari.gene }</Badge> { this.renderBadge(vari.gene, vari.input_gene) }</td>
+                <td><Badge variant="success">{ vari.gene }</Badge> { this.renderBadge( vari.gene, vari.input_gene ) }</td>
                 <td>{ vari.transcript }</td>
                 <td>{ vari.protein }</td>
-                <td><Button variant="outline-danger" onClick={ () => this.dropVariant( vari.idx ) }><FontAwesomeIcon icon={faTrash} /></Button></td>
+                <td><Button variant="outline-danger" onClick={ () => this.dropVariant( vari.idx ) }><FontAwesomeIcon icon={ faTrash } /></Button></td>
             </tr>
-        )})
+        ) } )
         return(
             <Table striped bordered hover className="table-condensed">
                 <thead>

@@ -17,7 +17,8 @@ class VariantInput extends Component {
                 build: 'GRCh37',                tarnscript: '',
                 variant: '',                    inheritance: '',
                 validTarnscript: true,          validVariant: true,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
+                cnt: 0
             }
         } else {
             this.state = {
@@ -25,7 +26,8 @@ class VariantInput extends Component {
                 build: 'GRCh37',                tarnscript: '',
                 variant: '',                    inheritance: '',
                 validTarnscript: true,          validVariant: true,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev
+                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
+                cnt: Math.max( props.variants.variants.map( (vari) => vari.idx ) )
             }
         }
         this.child_gene = React.createRef();
@@ -84,23 +86,22 @@ class VariantInput extends Component {
                     var input = this.state.tarnscript + ':' + this.state.variant
                     this.child_coll.current.addVariant(data, input, this.state.build, this.state.gene, this.state.zygosity)
 
-                    var vars = this.state.variants
-                    vars = vars.concat({
-                        idx: vars.length + 1,
-                        gene: data.content.gene,
-                        build: this.state.build,                protein: data.content.protein.tlr,
-                        transcript: data.content.transcript,    inheritance: this.state.zygosity,
-                        input: input,
-                        input_gene: this.state.gene
-                    })
-                    this.setState({ variants: vars })
-
-                    this.setState({ 
+                    this.setState({
+                        cnt: this.state.cnt + 1,
+                        variants: this.state.variants.concat({
+                            idx: this.state.cnt + 1,
+                            gene: data.content.gene,
+                            build: this.state.build,                protein: data.content.protein.tlr,
+                            transcript: data.content.transcript,    inheritance: this.state.zygosity,
+                            input: input,
+                            input_gene: this.state.gene
+                        }),
                         gene: '',               build: 'GRCh37',
                         tarnscript: '',         variant: '',
                         inheritance: '',
                         validTarnscript: true,  validVariant: true
                     })
+                    
                     this.child_gene.current.setValid(true)
                 })
                 .catch((err) => {

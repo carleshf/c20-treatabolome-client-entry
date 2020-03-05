@@ -12,11 +12,12 @@ class GenotypeCompositor extends Component {
         this.state = {
             variants: props.variants,
             no_geno: props.no_geno,
-            alelle1:[],
-            allele2:[], 
+            allele1: props.variants.length > 0 ?props.variants[ 0 ] : '',
+            allele2: props.variants.length > 0 ?props.variants[ 0 ] : '',
             callbackAddGenotype: props.callbackAddGenotype
         }
         autoBind(this)
+        console.log(this.state)
         console.log("end constructor")
     }
 
@@ -24,8 +25,16 @@ class GenotypeCompositor extends Component {
         this.setState({ no_geno: value })
     }
 
-    addGenotype = () => {
+    allele1Fetcher = ( evt ) => {
+        this.setState({ allele1: this.state.variants[ evt.target.selectedIndex ] })
+    }
 
+    allele2Fetcher = ( evt ) => {
+        this.setState({ allele2: this.state.variants[ evt.target.selectedIndex ] })
+    }
+
+    addGenotype = () => {
+        this.state.callbackAddGenotype( this.state.allele1, this.state.allele2 )
     }
 
     render = () => {
@@ -38,7 +47,7 @@ class GenotypeCompositor extends Component {
                     <Row>
                         <Form.Label column sm="2">Allele 1: </Form.Label>
                         <Col sm="10">
-                            <Form.Control onChange={ this.fetchBuild } as="select">
+                            <Form.Control onChange={ this.allele1Fetcher } as="select">
                                 { vars }
                             </Form.Control>
                         </Col>
@@ -46,14 +55,14 @@ class GenotypeCompositor extends Component {
                     <Row>
                         <Form.Label column sm="2">Allele 2: </Form.Label>
                         <Col sm="10">
-                            <Form.Control onChange={ this.fetchBuild } as="select">
+                            <Form.Control onChange={ this.allele2Fetcher } as="select">
                                 { vars }
                             </Form.Control>
                         </Col>
                     </Row>
                 </Col>
                 <Col sm="1">
-                    <Button disabled={ this.state.no_geno }><FontAwesomeIcon icon={ faPlus } /> Add</Button>
+                    <Button disabled={ this.state.no_geno } onClick={ this.addGenotype }><FontAwesomeIcon icon={ faPlus } /> Add</Button>
                 </Col>
             </Form.Group>
         )
