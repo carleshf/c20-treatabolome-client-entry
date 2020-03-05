@@ -182,10 +182,16 @@ class VariantInput extends Component {
                             <Form.Control onChange={ this.fetchVariant } isInvalid={ !this.state.validVariant } value={ this.state.variant } type="input" placeholder="g.48275363C>A" />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} controlId="inh_zyg">
+                    <Form.Group as={Row} controlId="inh_zyg"> 
                         <Form.Label column sm="2">Zygosity: </Form.Label>
-                        <Col sm="10">
-                            <Form.Control onChange={ this.fetchZygosity } value={ this.state.zygosity } type="input" placeholder="Zygosity" />
+                            <Col sm="10">
+                                <Typeahead
+                                    id="variantZygosity"
+                                    clearButton
+                                    multiple={true}
+                                    options={['heterozygous', 'homozygous', 'hemizygous', 'mosaic', 'unknown']}
+                                />
+                            </Col>
                         </Col>
                     </Form.Group>
                     <div className="text-right">
