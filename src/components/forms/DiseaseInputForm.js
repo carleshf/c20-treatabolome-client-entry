@@ -135,7 +135,7 @@ class DiseaseInput extends Component {
                         id="diseaseInheritance"
                         clearButton
                         multiple={true}
-                        options={['John', 'Paul', 'George', 'Ringo']}
+                        options={['autosomal dominant', 'autosomal recessive', 'X-linked', 'X-linked dominant', 'X-linked recessive', 'Y-linked inheritance', 'digenic inheritance', 'mitochondrial inheritance', 'oligogenic inheritance', 'autosomal dominant with paternal imprinting', 'autosomal dominant with maternal imprinting', 'unknown']}
                     />
                     </Col>
                 </Form.Group>
