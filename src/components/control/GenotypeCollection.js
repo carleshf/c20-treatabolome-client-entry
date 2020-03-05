@@ -7,14 +7,13 @@ import { Table, Button, Badge } from 'react-bootstrap';
 const autoBind = require('auto-bind');
 
 class GenotypeCollection extends Component {
-	constructor(props) {
-		super(props)
+	constructor( props ) {
+		super( props )
 		this.state = {
             genotypes: props.genotypes,
             callbackDropGenotype: props.callbackDropGenotype
         }
-        console.log(this.state)
-        autoBind(this)
+        autoBind( this )
     }
 
     addGenotype = ( genotype ) => {

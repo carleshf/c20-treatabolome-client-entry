@@ -14,7 +14,7 @@ class FormManager extends Component {
         super(props)
         //this.state = { current_step: 1 }
         this.state = {
-            current_step: 2,
+            current_step: 5,
             publication: {  authors: "Gutiérrez-Sacristán, A; Hernández-Ferrer, C; González, JR; Furlong, LI",
                             database: "PubMed",
                             journal: "Bioinformatics",

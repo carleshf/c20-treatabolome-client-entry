@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-import { Card, Jumbotron, Alert, Button, Form  } from 'react-bootstrap';
+import { Card, Jumbotron, Container, Row, Col, Button, Form  } from 'react-bootstrap';
+
+import DrugCollection from '../control/DrugCollection'
 
 const autoBind = require('auto-bind');
 
@@ -12,15 +14,36 @@ class DrugInput extends Component {
         if( typeof props.drugs === 'undefined' ) {
             this.state = {
                 drugs: [],                      cnt: 0,
+                validated: true,                drugname: '',
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         } else {
             this.state = {
                 drugs: props.drugs.drugs,       cnt: Math.max( props.drugs.drugs.map( (drg) => drg.idx ) ),
+                validated: true,                drugname: '',
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         }
+        this.child_coll = React.createRef();
         autoBind( this )
+    }
+
+    addDrug = () => {
+        if( this.state.drugname.length <= 2 ) {
+            this.setState({ validated: false })
+        } else {
+            let drg = { idx: this.state.cnt + 1, name: this.state.drugname }
+            this.setState({ cnt: this.state.cnt + 1, drugname: '', drugs: this.state.drugs.concat( drg ), validated: true })
+            this.child_coll.current.addDrug( drg )
+        }
+    }
+
+    fetchDrug = ( value ) => {
+        this.setState({ drugname: value.target.value.trim() })
+    }
+
+    dropDrug = ( idx ) => {
+        this.setState({ drugs: this.state.drugs.filter( (drg) => drg.idx !== idx ) })
     }
 
     triggerPrev = () => {
@@ -52,15 +75,35 @@ class DrugInput extends Component {
             <Card>
                 <Card.Header><h2>Drugs</h2></Card.Header>
                 <Card.Body>
-                    { info }
-                    <h4>Fetcher</h4>
-                    
-                    <h4>Collection</h4>
-                    
-                    <div className="float-sm-right">
-                        <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={ faChevronLeft } /> Previous</Button>{' '}
-                        { next }
-                    </div>
+                    <Container>
+                        <Row> { info } </Row>
+                        <Row> <h4>Fetcher</h4> </Row>
+                        <Row>
+                            <Col sm="2">
+                                <Form.Label>Durg: </Form.Label>
+                            </Col>    
+                            <Col sm="8">
+                                <Form.Control isInvalid={ !this.state.validated } type="input" onChange= { this.fetchDrug } placeholder="Type the name of a drug"/>
+                            </Col>
+                            <Col sm="2">
+                                <div className="float-sm-right">
+                                    <Button onClick={ this.addDrug }><FontAwesomeIcon icon={ faPlus } /> Add</Button>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row><h4>Collection</h4></Row>
+                        <Row>
+                           <DrugCollection ref={ this.child_coll } drugs={ this.state.drugs } callbackDropDrug={ this.dropDrug } />
+                        </Row>
+                        <Row>
+                            <Col sm="12">
+                                <div className="float-sm-right">
+                                    <Button onClick={ this.triggerPrev }><FontAwesomeIcon icon={ faChevronLeft } /> Previous</Button>{' '}
+                                    { next }
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </Card.Body>
             </Card>
         )
