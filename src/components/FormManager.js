@@ -41,7 +41,8 @@ class FormManager extends Component {
                 allele1: { build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
                 allele2: { build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
                 idx: 1
-            } ] }
+            } ] },
+            drugs: {        drugs: [ { name: 'Pyridostigmine', idx: 2 }, { name: 'Ephedrine', idx: 3 }, { name: '3,4-diaminopyridine', idx: 5 } ] }
         }
 
         this.child_guider = React.createRef();
