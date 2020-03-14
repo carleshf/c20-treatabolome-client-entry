@@ -8,13 +8,14 @@ import DiseaseInput from './forms/DiseaseInputForm'
 import VariantInput from './forms/VariantInputForm'
 import GenotypeInput from './forms/GenotypeInputForm'
 import DrugInput from './forms/DrugInputForm'
+import CocktailInput from './forms/CocktailInputForm'
 
 class FormManager extends Component {
     constructor(props) {
         super(props)
         //this.state = { current_step: 1 }
         this.state = {
-            current_step: 5,
+            current_step: 6,
             publication: {  authors: "Gutiérrez-Sacristán, A; Hernández-Ferrer, C; González, JR; Furlong, LI",
                             database: "PubMed",
                             journal: "Bioinformatics",
@@ -38,11 +39,14 @@ class FormManager extends Component {
                 {   build: "GRCh37", gene: "COL13A1", input_gene: 'COL13A1', idx: 8, inheritance: "", input: "NM_001130103.1:c.1173del", protein: "NP_001123575.1:p.(Leu392SerfsTer71)", transcript: "NM_001130103.1:c.1173del" }
             ] },
             genotypes: {    genotypes: [ {
-                allele1: { build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
-                allele2: { build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
-                idx: 1
+                            allele1: { build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
+                            allele2: { build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
+                            idx: 1
             } ] },
-            drugs: {        drugs: [ { name: 'Pyridostigmine', idx: 2 }, { name: 'Ephedrine', idx: 3 }, { name: '3,4-diaminopyridine', idx: 5 } ] }
+            drugs: {        drugs: [    { name: 'Pyridostigmine', idx: 2 }, 
+                                        { name: 'Ephedrine', idx: 3 }, {
+                                         name: '3,4-diaminopyridine', idx: 5 } 
+            ] }
         }
 
         this.child_guider = React.createRef();
@@ -74,6 +78,8 @@ class FormManager extends Component {
                 return <GenotypeInput genotypes={ this.state.genotypes } variants={ this.state.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 5:
                 return <DrugInput drugs={ this.state.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
+            case 6:
+                return <CocktailInput cocktails={ this.state.cocktails } drugs={ this.state.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             default:
                 return <div></div>
         }

@@ -17,8 +17,6 @@ class GenotypeCompositor extends Component {
             callbackAddGenotype: props.callbackAddGenotype
         }
         autoBind(this)
-        console.log(this.state)
-        console.log("end constructor")
     }
 
     toggleGenotype = ( value ) => {

@@ -81,7 +81,7 @@ class GenotypeInput extends Component {
             no_geno = 'warning'
         }
         if( this.state.no_geno || this.state.genotypes.length > 0 ) {
-            next = <Button onClick={ this.triggerNext }>Next <FontAwesomeIcon icon={faChevronRight} /></Button>
+            next = <Button onClick={ this.triggerNext }>Next <FontAwesomeIcon icon={ faChevronRight } /></Button>
         }
         return(
             <Card>
