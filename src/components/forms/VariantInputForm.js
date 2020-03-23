@@ -9,6 +9,15 @@ import { Card, Jumbotron, Form, Col, Row, Button  } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
 
+/*  VariantInput
+    ============
+    Main form to gather information on variants.
+    * In can be initialized with or without data
+    * If initialized with data, the data is expected to be in:
+        `props.variants.variants`: collection of variants, which are composed by 
+            `build`, `gene`, `input_gene`,  `inheritance`, `protein`, `transcript`,
+            `input` (aka. NM_000088.3:c.589G>T), and `idx`.
+*/
 class VariantInput extends Component {
     constructor(props) {
         super(props)

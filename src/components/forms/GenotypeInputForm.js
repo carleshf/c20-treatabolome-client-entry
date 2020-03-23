@@ -8,6 +8,18 @@ import { Card, Jumbotron, Alert, Button, Form  } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
 
+/*  GenotypeInput
+    =============
+    Main form to gather information on a disease.
+    * In can be initialized with or without data
+    * If initialized with data, the data is expected to be in:
+        `props.genotypes.genotypes` and `props.variants.variants`
+      `props.genotypes.genotypes` must be a JSON filed with the following fields:
+        allele1 and allele2
+      That at their time are JSON with variant information, as well as `props.variants.variants`:
+        build, gene, input_gene, inheritance, input, protein, transcript, and idx
+      Then `props.no_geno` is a boolean indicating if there is genotype information.
+*/
 class GenotypeInput extends Component {
     constructor( props ) {
         super( props )

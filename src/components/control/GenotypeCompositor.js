@@ -12,8 +12,8 @@ class GenotypeCompositor extends Component {
         this.state = {
             variants: props.variants,
             no_geno: props.no_geno,
-            allele1: props.variants.length > 0 ?props.variants[ 0 ] : '',
-            allele2: props.variants.length > 0 ?props.variants[ 0 ] : '',
+            allele1: props.variants.length > 0 ? props.variants[ 0 ] : '',
+            allele2: props.variants.length > 0 ? props.variants[ 0 ] : '',
             callbackAddGenotype: props.callbackAddGenotype
         }
         autoBind(this)
@@ -45,7 +45,7 @@ class GenotypeCompositor extends Component {
                     <Row>
                         <Form.Label column sm="2">Allele 1: </Form.Label>
                         <Col sm="10">
-                            <Form.Control onChange={ this.allele1Fetcher } as="select">
+                            <Form.Control disabled={ this.state.no_geno } onChange={ this.allele1Fetcher } as="select">
                                 { vars }
                             </Form.Control>
                         </Col>
@@ -53,7 +53,7 @@ class GenotypeCompositor extends Component {
                     <Row>
                         <Form.Label column sm="2">Allele 2: </Form.Label>
                         <Col sm="10">
-                            <Form.Control onChange={ this.allele2Fetcher } as="select">
+                            <Form.Control disabled={ this.state.no_geno } onChange={ this.allele2Fetcher } as="select">
                                 { vars }
                             </Form.Control>
                         </Col>

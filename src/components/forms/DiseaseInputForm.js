@@ -16,10 +16,10 @@ const autoBind = require('auto-bind');
     ============
     Main form to gather information on a disease.
     * In can be initialized with or without data
-    * If initalized with data, the data is expected to be in:
+    * If initialized with data, the data is expected to be in:
         `props.disease`
       And to be a JSON filed with the following fields:
-         ordo, omim, hpo
+        ordo, omim, hpo
 */
 class DiseaseInput extends Component {
     constructor( props ) {

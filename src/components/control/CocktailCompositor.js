@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faPrescriptionBottleAlt} from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faPrescriptionBottleAlt, faBroom } from '@fortawesome/free-solid-svg-icons'
 
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 const autoBind = require('auto-bind');
+
+
+const unique = (arr) => {
+    return [...new Set(arr)];
+}
 
 class CocktailCompositor extends Component {
     constructor(props) {
@@ -13,22 +18,35 @@ class CocktailCompositor extends Component {
             drugs: props.drugs,
             no_cok: props.no_cok,
             cocktail: [],
+            selected : props.drugs.length > 0 ? props.drugs[ 0 ] : { name: "", idx: -1 },
             callbackAddCocktail: props.callbackAddCocktail
         }
         autoBind( this )
-        console.log("end constructor")
     }
 
+    clearCurrent = () => {
+        this.setState({ cocktail: [],
+            selected : this.state.drugs.length > 0 ? this.state.drugs[ 0 ] : { name: "", idx: -1 },
+        })
+    }
     toggleCocktail = ( value ) => {
         this.setState({ no_cok: value })
     }
 
     drugFetcher = ( evt ) => {
-        this.setState({ allele1: this.state.variants[ evt.target.selectedIndex ] })
+        this.setState({ selected: this.state.drugs[ evt.target.selectedIndex ] })
+    }
+
+    addDrugToCocktail = ( evt ) => {
+
+        this.setState({ cocktail: unique( this.state.cocktail.concat( this.state.selected ) ) })
     }
 
     addCocktail = () => {
-        //this.state.callbackAddCocktail( this.state.allele1, this.state.allele2 )
+        this.state.callbackAddCocktail( this.state.cocktail )
+        this.setState({ cocktail: [], 
+            selected : this.state.drugs.length > 0 ? this.state.drugs[ 0 ] : { name: "", idx: -1 }
+        })
     }
 
     render = () => {
@@ -37,22 +55,38 @@ class CocktailCompositor extends Component {
         } )
         return(
             <Form.Group as={Row} controlId="cocktail_compositor">
-                <Col sm="10">
+                <Col sm="2">
                     <Row>
-                        <Form.Label column sm="2">Drug: </Form.Label>
-                        <Col sm="10">
-                            <Form.Control onChange={ this.allele1Fetcher } as="select">
-                                { drugs }
-                            </Form.Control>
-                        </Col>
+                        <Form.Label>Drug: </Form.Label>
+                    </Row>
+                    <Row></Row>
+                </Col>
+                <Col sm="6">
+                    <Row>
+                        <Form.Control disabled={ this.state.no_cok } onChange={ this.drugFetcher } value={ this.state.selected.name } as="select">
+                            { drugs }
+                        </Form.Control>
                     </Row>
                     <Row>
-                            <Col sm="2"></Col>
-                            <Col sm="9">Mixed drugs: { this.state.cocktail.length === 0 ? '---' : this.state.cocktail.join(', ') }</Col>
+                        Mixed drugs: { this.state.cocktail.length === 0 ? '---' : this.state.cocktail.map( (x) => x.name ).join(', ') }
                     </Row>
                 </Col>
                 <Col sm="2">
-                    <Button disabled={ this.state.no_geno } onClick={ this.addGenotype }><FontAwesomeIcon icon={ faPlus } /> Add</Button>
+                    <Row>
+                        <div className="float-sm-center">
+                            <Button disabled={ this.state.no_cok } onClick={ this.addDrugToCocktail }>Add <FontAwesomeIcon icon={ faPlus } /></Button>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="float-sm-right">
+                            <Button disabled={ this.state.no_cok } variant="danger" onClick={ this.clearCurrent } >Clear <FontAwesomeIcon icon={ faBroom } /></Button>
+                        </div>
+                    </Row>
+                </Col>
+                <Col sm="2">
+                    <div className="float-sm-right">
+                        <Button disabled={ this.state.no_cok } onClick={ this.addCocktail }><FontAwesomeIcon icon={ faPrescriptionBottleAlt } /> Add cocktail</Button>
+                    </div>
                 </Col>
             </Form.Group>
         )

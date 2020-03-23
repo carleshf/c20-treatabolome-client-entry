@@ -9,13 +9,14 @@ import VariantInput from './forms/VariantInputForm'
 import GenotypeInput from './forms/GenotypeInputForm'
 import DrugInput from './forms/DrugInputForm'
 import CocktailInput from './forms/CocktailInputForm'
+import TreatmentInput from './forms/TreatmentInput'
 
 class FormManager extends Component {
     constructor(props) {
         super(props)
         //this.state = { current_step: 1 }
         this.state = {
-            current_step: 6,
+            current_step: 7,
             publication: {  authors: "Gutiérrez-Sacristán, A; Hernández-Ferrer, C; González, JR; Furlong, LI",
                             database: "PubMed",
                             journal: "Bioinformatics",
@@ -44,8 +45,24 @@ class FormManager extends Component {
                             idx: 1
             } ] },
             drugs: {        drugs: [    { name: 'Pyridostigmine', idx: 2 }, 
-                                        { name: 'Ephedrine', idx: 3 }, {
-                                         name: '3,4-diaminopyridine', idx: 5 } 
+                                        { name: 'Ephedrine', idx: 3 }, 
+                                        { name: '3,4-diaminopyridine', idx: 5 } 
+            ] },
+            cocktails: {    cocktails: [ 
+                { idx: 2, cocktails: [ { idx: 2, name: 'Pyridostigmine' } ] },
+                { idx: 3, cocktails: [ { idx: 3, name: 'Ephedrine' }, { idx: 5, name: '3,4-diaminopyridine' }  ] }
+            ] },
+            treatments: {   treatments: [
+                { trigger: { source: "cocktail", value: { idx: 3, cocktails: [ { idx: 3, name: "Ephedrine" }, { idx: 5, name: "3,4-diaminopyridine" } ] } },
+                  target: { source: "genotype", value: {
+                    allele1: { build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
+                    allele2: { build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" }
+                  },
+                  idx: 1 }
+                },
+                { trigger: { source: "drug", value: { idx: 2, name: "Pyridostigmine" } },
+                  target: { source: "variant",  value: { idx: 7, build: "GRCh37", gene: "COLQ", input_gene: "COLQ", inheritance: "", input: "NM_005677.3:c.444G>A", protein: "NP_005668.2:p.(Trp148Ter)", transcript: "NM_005677.3:c.444G>A" } }
+                }
             ] }
         }
 
@@ -54,16 +71,16 @@ class FormManager extends Component {
 
     moveNext = (data) => {
         if( typeof data.data !== 'undefined' ) {
-            console.log("hello --->", data.data)
             this.setState({ current_step: data.step })
-            this.child_guider.current.updateStep(data.step)
-            this.state[data.formName] = data.data
+            this.child_guider.current.updateStep( data.step )
+            this.state[ data.formName ] = data.data
         }
+        console.log( "HELLO ----> ", data )
     }
 
     movePrev = (data) => {
         this.setState({ current_step: data.step })
-        this.child_guider.current.updateStep(data.step)
+        this.child_guider.current.updateStep( data.step )
     }
 
     createFormToShow = () => {
@@ -79,7 +96,9 @@ class FormManager extends Component {
             case 5:
                 return <DrugInput drugs={ this.state.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 6:
-                return <CocktailInput cocktails={ this.state.cocktails } drugs={ this.state.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
+                return <CocktailInput cocktails={ this.state.cocktails.cocktails } drugs={ this.state.drugs.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
+            case 7:
+                return <TreatmentInput treatments={ this.state.treatments.treatments } cocktails={ this.state.cocktails.cocktails } drugs={ this.state.drugs.drugs } genotypes={ this.state.genotypes.genotypes } variants={ this.state.variants.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             default:
                 return <div></div>
         }
