@@ -15,18 +15,18 @@ class TreatmentInput extends Component {
         if( typeof props.treatments === 'undefined' ) {
             this.state = {
                 treatments: [],
-                cocktails: props.cocktails,     drugs: props.drugs,
-                genotypes: props.genotypes,     variants: props.variants,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
+                cocktails: props.cocktails.cocktails,   drugs: props.drugs.drugs,
+                genotypes: props.genotypes.genotypes,   variants: props.variants.variants,
+                callbackNext: props.moveNext,           callbackPrev: props.movePrev,
                 cnt: 0
             }
         } else {
             this.state = {
-                treatments: props.treatments,
-                cocktails: props.cocktails,     drugs: props.drugs,
-                genotypes: props.genotypes,     variants: props.variants,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
-                cnt: Math.max( props.treatments.map( (trt) => trt.idx ) )
+                treatments: props.treatments.treatments,
+                cocktails: props.cocktails.cocktails,   drugs: props.drugs.drugs,
+                genotypes: props.genotypes.genotypes,   variants: props.variants.variants,
+                callbackNext: props.moveNext,           callbackPrev: props.movePrev,
+                cnt: Math.max( ...props.treatments.treatments.map( (trt) => trt.idx ) )
             }
         }
         this.child_coll = React.createRef();
@@ -35,13 +35,13 @@ class TreatmentInput extends Component {
 
     triggerPrev = () => {
         this.state.callbackPrev({
-            formName: 'treatment',   step: 6
+            formName: 'treatments',   step: 6
         })
     }
 
     triggerNext = () => {
         this.state.callbackNext({
-            formName: 'treatment',   step: 8,
+            formName: 'treatments',   step: 8,
             data: { treatments: this.state.treatments }
         })
     }
@@ -53,7 +53,6 @@ class TreatmentInput extends Component {
             cnt: this.state.cnt + 1
         })
         this.child_coll.current.addTreatment( trt )
-        console.log( trt )
     }
 
     dropTreatment = ( idx ) => {
@@ -65,11 +64,12 @@ class TreatmentInput extends Component {
         var info = ''
         if( this.state.treatments.length === 0 ) {
             info = <Jumbotron>
-                <p>...</p>
-                <p>This step of the <em>treatabolome entry tool</em> allows to use the previously introduced variants to define genotypes. Start selecting one of the variants as <em>allele 1</em>and then go on by selecting the remaining variants observed as <em>allele 2</em>.</p>
+                <p>This is the last step in the <em>teratabolome entry tool</em> before verifying the data you inputed.</p>
+                <p>Pelase, use the fetcher section to link a drug or a cocktail (<em>trigger</em>) with a variant or a genotype (<em>targget</em>).</p>
+                <p>Once this operation is compelted, click on the "next" button.</p>
             </Jumbotron>
         }
-        if( this.state.cocktails.length > 0 ) {
+        if( this.state.treatments.length > 0 ) {
             next = <Button onClick={ this.triggerNext }>Next <FontAwesomeIcon icon={ faChevronRight } /></Button>
         }
         return(

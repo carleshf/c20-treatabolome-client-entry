@@ -13,15 +13,15 @@ class CocktailInput extends Component {
         super( props )
         if( typeof props.cocktails === 'undefined' ) {
             this.state = {
-                cocktails: [],                  drugs: props.drugs,
+                cocktails: [],                  drugs: props.drugs.drugs,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev,
                 no_cok: false,                  cnt: 0
             }
         } else {
             this.state = {
-                cocktails: props.cocktails,     drugs: props.drugs,
-                callbackNext: props.moveNext,   callbackPrev: props.movePrev,
-                no_cok: props.no_cok,           cnt: Math.max( props.cocktails.map( (gen) => gen.idx ) )
+                cocktails: props.cocktails.cocktails,   drugs: props.drugs.drugs,
+                callbackNext: props.moveNext,           callbackPrev: props.movePrev,
+                no_cok: props.no_cok,                   cnt: Math.max( props.cocktails.map( (gen) => gen.idx ) )
             }
         }
         this.child_cons = React.createRef();
