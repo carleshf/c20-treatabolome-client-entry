@@ -21,7 +21,7 @@ class CocktailInput extends Component {
             this.state = {
                 cocktails: props.cocktails.cocktails,   drugs: props.drugs.drugs,
                 callbackNext: props.moveNext,           callbackPrev: props.movePrev,
-                no_cok: props.no_cok,                   cnt: Math.max( props.cocktails.map( (gen) => gen.idx ) )
+                no_cok: props.no_cok,                   cnt: Math.max( ...props.cocktails.cocktails.map( (gen) => gen.idx ) )
             }
         }
         this.child_cons = React.createRef();
@@ -35,7 +35,7 @@ class CocktailInput extends Component {
     }
 
     addCocktail = ( cok ) => {
-        let cok2 = { idx: this.state.cnt + 1, cocktail: cok }
+        let cok2 = { idx: this.state.cnt + 1, cocktails: cok }
         this.setState({ 
             cocktails: this.state.cocktails.concat( cok2 ),
             cnt: this.state.cnt + 1

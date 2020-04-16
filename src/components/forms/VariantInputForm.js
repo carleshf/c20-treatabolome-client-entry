@@ -15,7 +15,7 @@ const autoBind = require('auto-bind');
     * In can be initialized with or without data
     * If initialized with data, the data is expected to be in:
         `props.variants.variants`: collection of variants, which are composed by 
-            `build`, `gene`, `input_gene`,  `inheritance`, `protein`, `transcript`,
+            `build`, `gene`, `input_gene`,  `zygosity`, `protein`, `transcript`,
             `input` (aka. NM_000088.3:c.589G>T), and `idx`.
 */
 class VariantInput extends Component {
@@ -25,7 +25,7 @@ class VariantInput extends Component {
             this.state = {
                 variants: [],                   gene: '',
                 build: 'GRCh37',                tarnscript: '',
-                variant: '',                    inheritance: '',
+                variant: '',                    zygosity: '',
                 validTarnscript: true,          validVariant: true,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev,
                 cnt: 0
@@ -34,10 +34,10 @@ class VariantInput extends Component {
             this.state = {
                 variants: props.variants.variants,       gene: '',
                 build: 'GRCh37',                tarnscript: '',
-                variant: '',                    inheritance: '',
+                variant: '',                    zygosity: '',
                 validTarnscript: true,          validVariant: true,
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev,
-                cnt: Math.max( props.variants.variants.map( (vari) => vari.idx ) )
+                cnt: Math.max( ...props.variants.variants.map( (vari) => vari.idx ) )
             }
         }
         this.child_gene = React.createRef();
@@ -66,7 +66,7 @@ class VariantInput extends Component {
     }
 
     fetchZygosity = (value) => {
-        this.setState({ inheritance: value.target.value.trim() })
+        this.setState({ zygosity: value.target.value.trim() })
     }
 
     validateVariant = () => {
@@ -102,13 +102,13 @@ class VariantInput extends Component {
                             idx: this.state.cnt + 1,
                             gene: data.content.gene,
                             build: this.state.build,                protein: data.content.protein.tlr,
-                            transcript: data.content.transcript,    inheritance: this.state.zygosity,
+                            transcript: data.content.transcript,    zygosity: this.state.zygosity,
                             input: input,
                             input_gene: this.state.gene
                         }),
                         gene: '',               build: 'GRCh37',
                         tarnscript: '',         variant: '',
-                        inheritance: '',
+                        zygosity: '',
                         validTarnscript: true,  validVariant: true
                     })
                     

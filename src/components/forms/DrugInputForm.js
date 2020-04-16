@@ -9,8 +9,10 @@ import DrugCollection from '../control/DrugCollection'
 const autoBind = require('auto-bind');
 
 class DrugInput extends Component {
-    constructor(props) {
-        super(props)
+    constructor( props ) {
+        super( props )
+        console.log( "props", props )
+        console.log( props.drugs.drugs.map( (drg) => drg.idx ) )
         if( typeof props.drugs === 'undefined' ) {
             this.state = {
                 drugs: [],                      cnt: 0,
@@ -19,13 +21,14 @@ class DrugInput extends Component {
             }
         } else {
             this.state = {
-                drugs: props.drugs.drugs,       cnt: Math.max( props.drugs.drugs.map( (drg) => drg.idx ) ),
+                drugs: props.drugs.drugs,       cnt: Math.max( ...props.drugs.drugs.map( (drg) => drg.idx ) ),
                 validated: true,                drugname: '',
                 callbackNext: props.moveNext,   callbackPrev: props.movePrev
             }
         }
         this.child_coll = React.createRef();
         autoBind( this )
+        console.log( this.state )
     }
 
     addDrug = () => {

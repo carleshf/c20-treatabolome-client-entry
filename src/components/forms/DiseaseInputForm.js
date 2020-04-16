@@ -88,7 +88,8 @@ class DiseaseInput extends Component {
         this.state.callbackNext({
             formName: 'disease',   step: 3,
             data: { ordo: this.state.ordo,  omim: this.state.omim,
-                hpo: this.state.hpo,        description: this.state.description
+                hpo: this.state.hpo,        description: this.state.description,
+                inheritance: this.state.inheritance
             }
         })
     }

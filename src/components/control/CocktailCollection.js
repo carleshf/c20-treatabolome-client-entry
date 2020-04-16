@@ -25,13 +25,14 @@ class CocktailCollection extends Component {
     }
 
     render = () => {
+        console.log( this.state.cocktails )
         var cnt = this.state.cocktails.map( (cok, idx) => { return(
             <tr key={ idx }>
                 <td>{ cok.idx }</td>
                 <td>{ cok.cocktails.map( (x) => x.name ).join(', ') }</td>
                 <td><Button variant="outline-danger" onClick={ () => this.dropCocktail( cok.idx ) }><FontAwesomeIcon icon={ faTrash } /></Button></td>
             </tr>
-        ) } )
+        ) })
         return( <Table striped bordered hover>
                 <thead>
                     <tr>

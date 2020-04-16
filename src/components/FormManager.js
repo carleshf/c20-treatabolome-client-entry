@@ -31,20 +31,21 @@ class FormManager extends Component {
                                     { id: "HP:0000924", name: "Abnormality of the skeletal system", term: "HP:0000924 > Abnormality of the skeletal system" }   ],
                             omim: [],
                             ordo: [ { id: "Orphanet:370943", name: "Autism spectrum disorder-epilepsy-arthrogryposis syndrome", term: "Orphanet:370943 > Autism spectrum disorder-epilepsy-arthrogryposis syndrome" } ],
-                            description: "This is the descriptions",
+                            description: "This is the description of the disease",
                             inheritance: [ "unknown" ]
             },
             variants: {     variants: [
-                {   build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
-                {   build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
-                {   build: "GRCh37", gene: "COLQ", input_gene: 'COLQ', idx: 7, inheritance: "", input: "NM_005677.3:c.444G>A", protein: "NP_005668.2:p.(Trp148Ter)", transcript: "NM_005677.3:c.444G>A" },
-                {   build: "GRCh37", gene: "COL13A1", input_gene: 'COL13A1', idx: 8, inheritance: "", input: "NM_001130103.1:c.1173del", protein: "NP_001123575.1:p.(Leu392SerfsTer71)", transcript: "NM_001130103.1:c.1173del" }
+                {   build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, zygosity: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
+                {   build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, zygosity: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
+                {   build: "GRCh37", gene: "COLQ", input_gene: 'COLQ', idx: 7, zygosity: "", input: "NM_005677.3:c.444G>A", protein: "NP_005668.2:p.(Trp148Ter)", transcript: "NM_005677.3:c.444G>A" },
+                {   build: "GRCh37", gene: "COL13A1", input_gene: 'COL13A1', idx: 8, zygosity: "", input: "NM_001130103.1:c.1173del", protein: "NP_001123575.1:p.(Leu392SerfsTer71)", transcript: "NM_001130103.1:c.1173del" }
             ] },
             genotypes: {    genotypes: [ {
                             allele1: { build: "GRCh37", gene: "COL1A1", input_gene: 'APP', idx: 3, inheritance: "", input: "NM_000088.3:c.589G>T", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T"  },
                             allele2: { build: "GRCh37", gene: "COL1A1", input_gene: 'XACT', idx: 2, inheritance: "", input: "NC_000017.10:g.48275363C>A", protein: "NP_000079.2(LRG_1p1):p.(Gly197Cys)", transcript: "NM_000088.3:c.589G>T" },
                             idx: 3
-            } ] },
+                } ],
+                no_geno: false },
             drugs: {        drugs: [    { name: 'Pyridostigmine', idx: 2 }, 
                                         { name: 'Ephedrine', idx: 3 }, 
                                         { name: '3,4-diaminopyridine', idx: 5 } 
@@ -95,7 +96,7 @@ class FormManager extends Component {
             case 3:
                 return <VariantInput variants={ this.state.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 4:
-                return <GenotypeInput genotypes={ this.state.genotypes } variants={ this.state.variants } moveNext={ this.moveNext } movePrev={ this.movePrev } />
+                return <GenotypeInput genotypes={ this.state.genotypes } variants={ this.state.variants } no_geno={ this.state.genotypes.no_geno } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 5:
                 return <DrugInput drugs={ this.state.drugs } moveNext={ this.moveNext } movePrev={ this.movePrev } />
             case 6:

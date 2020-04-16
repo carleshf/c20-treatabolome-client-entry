@@ -33,9 +33,10 @@ class ReportValidation extends Component {
     }
 
     checkAll = () => {
-        return this.state.checkPublication && this.state.checkDisease &&
-            this.state.checkVariantsGenotypes && this.state.checkDrugsCocktails &&
-            this.state.checkTreatments
+        return true
+        //return this.state.checkPublication && this.state.checkDisease &&
+        //    this.state.checkVariantsGenotypes && this.state.checkDrugsCocktails &&
+        //    this.state.checkTreatments
     }
 
     createGene = (gene, input) => {
@@ -50,9 +51,7 @@ class ReportValidation extends Component {
         return '(' + this.createGene(allele1.gene, allele1.input_gene) + ') ' + allele1.input + ' / (' + this.createGene(allele2.gene, allele2.input_gene) + ') ' + allele2.input
     }
 
-    togglePublication = () => { 
-        this.setState({ checkPublication: !this.state.checkPublication })
-    }
+    togglePublication = () => {  this.setState({ checkPublication: !this.state.checkPublication }) }
     toggleDisease = () => { this.setState({ checkDisease: !this.state.checkDisease })}
     toggleVariantsGenotypes = () => { this.setState({ checkVariantsGenotypes: !this.state.checkVariantsGenotypes })}
     toggleDrugsCocktails = () => { this.setState({ checkDrugsCocktails: !this.state.checkDrugsCocktails })}
@@ -169,6 +168,7 @@ class ReportValidation extends Component {
                     </ol>
             </ul>
     }
+    
     summaryCocktails = ( cok, trt ) => {
         const showWarning = ( v, l ) => {
             if( l.includes( v.idx ) ) {
@@ -250,10 +250,29 @@ class ReportValidation extends Component {
         </OverlayTrigger>
     }
 
+    submitData = () => { 
+        console.log( "submitData" )
+        fetch("http://127.0.0.1:5000/api/insert", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    publication: this.state.publication,
+                    disease: this.state.disease,
+                    variants: this.state.variants,
+                    genotypes: this.state.genotypes,
+                    drugs: this.state.drugs,
+                    cocktails: this.state.cocktails,
+                    treatments: this.state.treatments
+                })
+        })
+        .then(resp => resp.json())
+        .then(json => console.log( json ))
+    }
+
     render = () => {
         var next = ''
         if( this.checkAll() ) {
-            next = <Button variant="success" onClick={ this.triggerNext }>Submit article <FontAwesomeIcon icon={ faChevronRight } /></Button>
+            next = <Button variant="success" onClick={ this.submitData }>Submit article <FontAwesomeIcon icon={ faChevronRight } /></Button>
         }
         return(
             <Card>
