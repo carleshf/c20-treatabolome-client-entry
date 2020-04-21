@@ -1,21 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react'
+import {Route} from 'react-router-dom'
+import Landing from './components/Landing'
+import Header from './components/Header'
+import Entry from './components/Entry'
 
-import './App.css';
-
-import Header from './components/Header';
-import FormManager from './components/FormManager';
-
-console.log(React.version);
-
-function App() {
-    return (
-        <Fragment>
-            <Header />
-            <main className="my-3 py-5">
-                <FormManager init_step={ 1 }/>
-            </main>
-        </Fragment>
-    );
+class App extends Component {
+    render() {
+        return (
+            <div>
+                <Header />
+                <Route exact path='/' component={Landing}/>
+                <Route exact path='/entry' component={Entry}/>
+            </div>
+        )
+    }
 }
 
-export default App;
+export default App
